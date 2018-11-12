@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="module">
+      import generateData from "./input-generator.js";
+      console.log("Generating input data");
+      const millionInt = generateData(0, 1000, 1000000);
+      const tenMillionInt = generateData(0, 1000, 10000000);
+      const hundredMillionInt = generateData(0, 1000, 100000000);
+      console.log("Input Generated");
+
+      console.log("Starting benchmark\n\n");
+      // builtin Ecmascript sort
+      let time;
+      console.log("Builtin Ecmascript sort");
+      time = Date.now();
+      millionInt.sort();
+      console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+
+      time = Date.now();
+      tenMillionInt.sort();
+      console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+
+      time = Date.now();
+      hundredMillionInt.sort();
+      console.log(` - 10\u2078 entries sorted in ${Date.now() - time}ms`);
+    </script>
+  </body>
+</html>
