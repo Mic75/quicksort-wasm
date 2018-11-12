@@ -6,7 +6,7 @@ let's play with them.
 ## Ideas
 
 First we had to find a something that could benefit from parallelism, yet simple enough to implements.
-The Lomuto implementation of the [Quicksort Algorithm](https://en.wikipedia.org/wiki/Quicksort#Parallelization) seems a decent candidate.
+The [Quicksort Algorithm](https://en.wikipedia.org/wiki/Quicksort#Parallelization) seems a decent candidate.
 To highlight the supposed benefits of WebAssembly, we'll implements the following and see how they compete against each other:
 
 ### Mono Threaded
