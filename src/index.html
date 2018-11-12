@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <script type="module">
-      import generateData from "./input-generator.js";
-      console.log("Generating input data");
-      const millionInt = generateData(0, 1000, 1000000);
-      const tenMillionInt = generateData(0, 1000, 10000000);
-      const hundredMillionInt = generateData(0, 1000, 100000000);
-      console.log("Input Generated");
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+<script type="module">
 
-      console.log("Starting benchmark\n\n");
-      // builtin Ecmascript sort
-      let time;
-      console.log("Builtin Ecmascript sort");
-      time = Date.now();
-      millionInt.sort();
-      console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+  import generateData from "./input-generator.js";
+  import quicksort from "./quicksort.js";
 
-      time = Date.now();
-      tenMillionInt.sort();
-      console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+  console.log("Generating input data");
+  const millionInt = generateData(0, 1000, 1000000);
+  const tenMillionInt = generateData(0, 1000, 10000000);
+  const hundredMillionInt = generateData(0, 1000, 100000000);
+  let time;
+  console.log("Input Generated");
 
-      time = Date.now();
-      hundredMillionInt.sort();
-      console.log(` - 10\u2078 entries sorted in ${Date.now() - time}ms`);
-    </script>
-  </body>
+  console.log("Starting benchmark\n\n");
+
+  // builtin Ecmascript sort
+  console.log("Builtin Ecmascript sort");
+  time = Date.now();
+  millionInt.sort();
+  console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+
+  time = Date.now();
+  tenMillionInt.sort();
+  console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+
+  time = Date.now();
+  hundredMillionInt.sort();
+  console.log(` - 10\u2078 entries sorted in ${Date.now() - time}ms`);
+
+  console.log("\n");
+
+  // Pure JS Lomuto quicksort
+  console.log("Monothreaded Lomuto Quicksort, pure JS");
+  time = Date.now();
+  quicksort(millionInt, 0, millionInt.length - 1);
+  console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+
+  // !MAXIMUM calls stack exceeded
+  // time = Date.now();
+  // quicksort(hundredMillionInt, 0, hundredMillionInt.length - 1);
+  // console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+
+  console.log("\n");
+
+  // WebAssembly Lomuto quicksort
+  console.log("Monothreaded Lomuto Quicksort, WebAssembly")
+  //todo
+  console.log("todo");
+
+</script>
+</body>
 </html>
