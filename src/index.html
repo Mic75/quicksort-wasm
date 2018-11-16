@@ -9,6 +9,7 @@
 
   import generateData from "./input-generator.js";
   import quicksort from "./quicksort.js";
+  import wasm from "./quicksort-wasm.js";
 
   console.log("Generating input data");
   const millionInt = generateData(0, 1000, 1000000);
@@ -37,8 +38,9 @@
 
   // Pure JS Lomuto quicksort
   console.log("Monothreaded Lomuto Quicksort, pure JS");
+  let millionIntClone = millionInt.slice();
   time = Date.now();
-  quicksort(millionInt, 0, millionInt.length - 1);
+  quicksort(millionIntClone, 0, millionInt.length - 1);
   console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
 
   // !MAXIMUM calls stack exceeded
@@ -49,9 +51,12 @@
   console.log("\n");
 
   // WebAssembly Lomuto quicksort
-  console.log("Monothreaded Lomuto Quicksort, WebAssembly")
-  //todo
-  console.log("todo");
+  console.log("Monothreaded Lomuto Quicksort, WebAssembly");
+  const wasmQuicksort = wasm.cwrap('sort', null, ['array']); // cwrap is undefined, find why...
+  millionIntClone = million.slice();
+  time = Date.now();
+  wasmQuicksort(millionIntClone);
+  console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
 
 </script>
 </body>
