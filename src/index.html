@@ -9,7 +9,7 @@
 
   import generateData from "./input-generator.js";
   import quicksort from "./quicksort.js";
-  import wasm from "./quicksort-wasm.js";
+  import WasmModule from "./quicksort-wasm.js";
 
   console.log("Generating input data");
   const millionInt = generateData(0, 1000, 1000000);
@@ -51,12 +51,19 @@
   console.log("\n");
 
   // WebAssembly Lomuto quicksort
-  console.log("Monothreaded Lomuto Quicksort, WebAssembly");
-  const wasmQuicksort = wasm.cwrap('sort', null, ['array']); // cwrap is undefined, find why...
-  millionIntClone = million.slice();
-  time = Date.now();
-  wasmQuicksort(millionIntClone);
-  console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+  WasmModule().then(wasm => {
+    console.log("Monothreaded Lomuto Quicksort, WebAssembly");
+
+    let heapBuf = wasm._malloc(millionInt.length * Uint32Array.BYTES_PER_ELEMENT);
+    wasm.HEAP32.set(millionInt, heapBuf / 4)
+
+    time = Date.now();
+    wasm.ccall('sort', null, ['number', 'number', 'number'], [heapBuf, 0, millionInt.length - 1]);
+    console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+
+    wasm._free(heapBuf);
+  })
+
 
 </script>
 </body>
