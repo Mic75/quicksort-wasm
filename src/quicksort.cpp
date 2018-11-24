@@ -2,7 +2,8 @@
 // Emscripten is available under two separate licenses, the MIT license and the
 // University of Illinois/NCSA Open Source License.  Both these licenses can be
 // found in the LICENSE file.
-#include <math.h>
+#include <stdio.h>
+#include <sys/time.h>
 
 extern "C" {
 
@@ -36,4 +37,20 @@ extern "C" {
       sort(array, p + 1, hi);
     }
   }
+
+  void quicksort(int *array, int lo, int hi, char *exp) {
+   struct timeval t1, t2;
+   double elapsedTime;
+
+    gettimeofday(&t1, NULL);
+    sort(array, lo, hi);
+    gettimeofday(&t2, NULL);
+
+    // compute and print the elapsed time in millisec
+    elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+    elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+
+    printf(" - 10%s entries sorted in %.0f ms\n", exp, elapsedTime);
+  }
+
 }
