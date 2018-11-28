@@ -15,38 +15,48 @@
   const millionInt = generateData(0, 1000, 1000000);
   const tenMillionInt = generateData(0, 1000, 10000000);
   const hundredMillionInt = generateData(0, 1000, 100000000);
-  let time;
+  let time, millionIntCopy, tenMillionIntCopy, hundredMillionIntCopy;
+
   console.log("Input Generated");
 
   console.log("Starting benchmark\n\n");
 
   // builtin Ecmascript sort
   console.log("Builtin Ecmascript sort");
+
+  millionIntCopy = millionInt.slice();
   time = Date.now();
-  millionInt.sort();
+  millionIntCopy.sort();
   console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
 
+  tenMillionIntCopy = tenMillionInt.slice();
   time = Date.now();
-  tenMillionInt.sort();
+  tenMillionIntCopy.sort();
   console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
 
+  hundredMillionIntCopy = hundredMillionInt.slice();
   time = Date.now();
-  hundredMillionInt.sort();
+  hundredMillionIntCopy.sort();
   console.log(` - 10\u2078 entries sorted in ${Date.now() - time}ms`);
 
   console.log("\n");
 
   // Pure JS Lomuto quicksort
   console.log("Monothreaded Lomuto Quicksort, pure JS");
-  let millionIntClone = millionInt.slice();
-  time = Date.now();
-  quicksort(millionIntClone, 0, millionInt.length - 1);
-  console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
+  try {
+    millionIntCopy = millionInt.slice();
+    time = Date.now();
+    quicksort(millionIntCopy, 0, millionInt.length - 1);
+    console.log(` - 10\u2076 entries sorted in ${Date.now() - time}ms`);
 
-  // !MAXIMUM calls stack exceeded
-  // time = Date.now();
-  // quicksort(hundredMillionInt, 0, hundredMillionInt.length - 1);
-  // console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+    // !MAXIMUM calls stack exceeded
+    tenMillionIntCopy = tenMillionInt.slice();
+    time = Date.now();
+    quicksort(tenMillionIntCopy, 0, tenMillionInt.length - 1);
+    console.log(` - 10\u2077 entries sorted in ${Date.now() - time}ms`);
+  } catch (e) {
+    console.error("stack overflow");
+  }
 
   console.log("\n");
 
@@ -54,7 +64,7 @@
   WasmModule().then(wasm => {
     console.log("Monothreaded Lomuto Quicksort, WebAssembly");
 
-    function callWasm(array, exponant){
+    function callWasm(array, exponant) {
       let heapBuf = wasm._malloc(array.length * Uint32Array.BYTES_PER_ELEMENT);
       wasm.HEAP32.set(array, heapBuf / 4);
 
@@ -62,8 +72,10 @@
       wasm._free(heapBuf);
     }
 
-    callWasm(millionInt, "\u2076");
-    // callWasm(tenMillionInt, "\u2077"); stackoverflow
+    millionIntCopy = millionInt.slice();
+    tenMillionIntCopy = tenMillionIntCopy.slice();
+    callWasm(millionIntCopy, "\u2076");
+    // callWasm(tenMillionIntCopy, "\u2077"); // stack overflow
     // callWasm(hundredMillionInt, "\u2078"); stackoverflow
   })
 
