@@ -1,4 +1,4 @@
-# Threaded WebAssembly
+# Threaded WebAssembly (WIP)
 
 Now that WebAssembly threads are ready as experimental, starting from [Google Chrome v70](https://developers.google.com/web/updates/2018/10/wasm-threads)
 let's play with them.
