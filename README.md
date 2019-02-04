@@ -5,7 +5,7 @@ let's play with them.
 
 ## Ideas
 
-First we had to find a something that could benefit from parallelism, yet simple enough to implements.
+First we had to find something that could benefit from parallelism, yet simple enough to implements.
 The [Quicksort Algorithm](https://en.wikipedia.org/wiki/Quicksort#Parallelization) seems a decent candidate.
 To highlight the supposed benefits of WebAssembly, we'll implements the following and see how they compete against each other:
 
@@ -15,8 +15,35 @@ To highlight the supposed benefits of WebAssembly, we'll implements the followin
 - WebAssembly module, own implementation
 
 ### Parallelized
-- Web Worker
+- Web Worker (todo)
 - Threaded WebAssembly
 
 ### Input
-Our first idea is to perform the sorting against array of 10<sup>4</sup>, 10<sup>5</sup> and 10<sup>6</sup> integers within the range 0 to 10<sup>6</sup>.
+Our first idea was to perform the sorting against arrays of 10<sup>4</sup>, 10<sup>5</sup> and 10<sup>6</sup> integers 
+within the range 0 to 10<sup>6</sup>.
+
+We quickly faced stackoverflow with custom quicksort implementation and since we wanted to keep things simple, we did
+not want to spend time fine tuning quicksort and playing with stack size.
+
+Current idea is to perform the sorting with a constant count of 500,000 elements and get the average time after multiple
+runs (user defined) for each implementation.
+
+
+## Installation
+
+For now, the configure and build scripts are **Windows only**, it's still possible to make the thing work on other platform,
+but it'll require you to build the WASM module yourself.
+
+### Pre-requisites
+- [NodeJS](https://nodejs.org/en/) 6+
+- [Emscripten](https://emscripten.org/docs/getting_started/downloads.html)
+
+### Installing
+Just run `npm i` in a terminal and follow the instructions. 
+
+
+### Running
+In a terminal, run: `npm run start`
+
+The demo is now served locally and accessible on [http://localhost:8080](http://localhost:8080)
+The benchmark executes on page load and results are visible in the console.
