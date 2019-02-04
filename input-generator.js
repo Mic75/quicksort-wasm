@@ -5,10 +5,12 @@ function getRandomIntInclusive(min, max) {
 }
 
 
-export default function generateData(min, max, count) {
+function generateData(min, max, count) {
   let data = new Uint32Array(count);
   for (let i = 0; i < count; i++) {
     data[i] = getRandomIntInclusive(min, max);
   }
   return data;
 }
+
+var unsorted = generateData(0, 1000, 500000);

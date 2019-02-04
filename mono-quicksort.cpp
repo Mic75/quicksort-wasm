@@ -38,7 +38,7 @@ extern "C" {
     }
   }
 
-  void quicksort(int *array, int lo, int hi, char *exp) {
+  void quicksort(int *array, int lo, int hi) {
    struct timeval t1, t2;
    double elapsedTime;
 
@@ -50,7 +50,7 @@ extern "C" {
     elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
     elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
 
-    printf(" - 10%s entries sorted in %.0f ms\n", exp, elapsedTime);
+    printf(" 500 000 entries sorted in %.0f ms\n\n", elapsedTime);
   }
 
 }

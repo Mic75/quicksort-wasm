@@ -1,0 +1,1 @@
+emcc -O3 ..\threaded-quicksort.cpp -o ..\threaded-quicksort-wasm.js -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2 -s EXPORTED_FUNCTIONS="['_quicksort', '_malloc', '_free']" -s EXTRA_EXPORTED_RUNTIME_METHODS="['ccall']"

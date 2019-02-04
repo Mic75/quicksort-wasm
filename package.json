@@ -1,0 +1,23 @@
+{
+  "name": "quicksort-wasm",
+  "version": "1.0.0",
+  "description": "Now that WebAssembly threads are ready as experimental, starting from [Google Chrome v70](https://developers.google.com/web/updates/2018/10/wasm-threads)\r let's play with them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mic75/quicksort-wasm.git"
+  },
+  "author": "Mathieu Benard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mic75/quicksort-wasm/issues"
+  },
+  "homepage": "https://github.com/Mic75/quicksort-wasm#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}

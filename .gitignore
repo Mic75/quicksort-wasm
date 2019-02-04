@@ -1,2 +1,4 @@
-quicksort-wasm*
+*.mem
+*.wasm
+*-wasm.js
 .idea/
