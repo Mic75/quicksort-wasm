@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "http-server",
     "build": "node ./build.js",
-    "postinstall": "npm run build"
+    "configure": "node ./configure.js",
+    "postinstall": "npm run configure && npm run build"
   },
   "repository": {
     "type": "git",
