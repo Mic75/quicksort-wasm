@@ -6,12 +6,7 @@ const { exec } = require('child_process');
 
 if (os.type() === "Windows_NT") {
   let buildBat = `@call "${path.join(empath, 'emsdk')}" construct_env %*\n`;
-  [
-    'emcc -O3 .\\mono-quicksort.cpp -o .\\mono-quicksort-wasm.js -s EXPORTED_FUNCTIONS="[\'_quicksort\', \'_malloc\', \'_free\']" -s EXTRA_EXPORTED_RUNTIME_METHODS="[\'ccall\']" -s EXPORT_ES6=1 -s MODULARIZE=1 && ',
-    'emcc -O3 .\\threaded-quicksort.cpp -o .\\threaded-quicksort-wasm.js -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2 -s EXPORTED_FUNCTIONS="[\'_quicksort\', \'_malloc\', \'_free\']" -s EXTRA_EXPORTED_RUNTIME_METHODS="[\'ccall\']"'
-  ].forEach((cmd) => {
-    buildBat += cmd;
-  });
+  buildBat += 'emcc -O3 .\\quicksort.cpp -o .\\quicksort-wasm.js -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2 -s EXPORTED_FUNCTIONS="[\'_mtQuicksort\',\'_quicksort\', \'_malloc\', \'_free\']" -s EXTRA_EXPORTED_RUNTIME_METHODS="[\'ccall\']"';
 
   fs.writeFileSync('./build.bat', buildBat);
 

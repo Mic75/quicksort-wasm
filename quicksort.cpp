@@ -11,11 +11,22 @@ extern "C" {
       int *array;
       int lo;
       int hi;
-      short threadId;
     } sortArgs;
 
     pthread_t part1Thread;
     pthread_t part2Thread;
+
+    void showArray(int *array, int count)
+    {
+      printf("[");
+      for (int i = 0; i < count; i++)
+      {
+        printf("%i", array[i]);
+        if (i < count - 1)
+          printf(",");
+      }
+      printf("]\n\n");
+    }
 
     void swap(int *array, int swapy1, int swapy2)
     {
@@ -44,53 +55,56 @@ extern "C" {
       return i;
     }
 
-    void *sort(void *args)
+    void sort(int *array, int lo, int hi) {
+      if (lo < hi) {
+        int p = partition(array, lo, hi);
+        sort(array, lo, p - 1);
+        sort(array, p + 1, hi);
+      }
+    }
+
+    void *tSort(void *args)
     {
       sortArgs *param = (sortArgs *)args;
 
       if (param->lo < param->hi)
       {
         int p = partition(param->array, param->lo, param->hi);
-        sortArgs lowerPart = {.array = param->array, .lo = param->lo, .hi = p - 1, .threadId = -1};
-        sortArgs upperPart = {.array = param->array, .lo = p + 1, .hi = param->hi, .threadId = -1};
-        sort(&lowerPart);
-        sort(&upperPart);
+        sort(param->array, param->lo, p - 1);
+        sort(param->array, p + 1, param->hi);
       }
-
-       if (param->threadId != -1) {
-          pthread_exit(NULL);
-      }
-
-      return (void*) 0;
+      pthread_exit(NULL);
     }
 
     void spawnSortingThread( int *array, int lo, int hi) {
 
       int p = partition(array, lo, hi);
-      sortArgs lowerPart = {.array = array, .lo = lo, .hi = p - 1, .threadId = 1 };
-      sortArgs upperPart = {.array = array, .lo = p + 1, .hi = hi, .threadId = 2 };
+      sortArgs lowerPart = {.array = array, .lo = lo, .hi = p - 1 };
+      sortArgs upperPart = {.array = array, .lo = p + 1, .hi = hi };
 
-      pthread_create(&part1Thread, NULL, sort, &lowerPart);
-      pthread_create(&part2Thread, NULL, sort, &upperPart);
+      pthread_create(&part1Thread, NULL, tSort, &lowerPart);
+      pthread_create(&part2Thread, NULL, tSort, &upperPart);
 
       pthread_join(part1Thread, NULL);
       pthread_join(part2Thread, NULL);
     }
 
-    void showArray(int *array, int count)
-    {
-      printf("[");
-      for (int i = 0; i < count; i++)
-      {
-        printf("%i", array[i]);
-        if (i < count - 1)
-          printf(",");
-      }
+    void quicksort(int *array, int lo, int hi) {
+      struct timeval t1, t2;
+      double elapsedTime;
 
-      printf("]\n\n");
+      gettimeofday(&t1, NULL);
+      sort(array, lo, hi);
+      gettimeofday(&t2, NULL);
+
+      // compute and print the elapsed time in millisec
+      elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+      elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+
+      printf(" 500 000 entries sorted in %.0f ms\n\n", elapsedTime);
     }
 
-    void quicksort(int *array, int lo, int hi)
+    void mtQuicksort(int *array, int lo, int hi)
     {
       struct timeval t1, t2;
       double elapsedTime;

@@ -4,8 +4,7 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
-function generateData(min, max, count) {
+export default function shuffle(min, max, count) {
   let data = new Uint32Array(count);
   for (let i = 0; i < count; i++) {
     data[i] = getRandomIntInclusive(min, max);
@@ -13,4 +12,3 @@ function generateData(min, max, count) {
   return data;
 }
 
-var unsorted = generateData(0, 1000, 500000);
