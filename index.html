@@ -5,10 +5,19 @@
   <title></title>
 </head>
 <body>
+
+<div id="iteration"></div>
+<div id="ecma"></div>
+<div id="custom-js"></div>
+<div id="m-wasm"></div>
+<div id="t-wasm"></div>
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+
 <script>
   wasmReady = false;
   Module = {
-    onRuntimeInitialized: function() {
+    onRuntimeInitialized: function () {
       // Wasm has been compiled and load, global Module object is ready to be used
       wasmReady = true;
     }

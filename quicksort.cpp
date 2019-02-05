@@ -89,7 +89,7 @@ extern "C" {
       pthread_join(part2Thread, NULL);
     }
 
-    void quicksort(int *array, int lo, int hi) {
+    double quicksort(int *array, int lo, int hi) {
       struct timeval t1, t2;
       double elapsedTime;
 
@@ -101,10 +101,10 @@ extern "C" {
       elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
       elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
 
-      printf(" 500 000 entries sorted in %.0f ms\n\n", elapsedTime);
+      return elapsedTime;
     }
 
-    void mtQuicksort(int *array, int lo, int hi)
+    double mtQuicksort(int *array, int lo, int hi)
     {
       struct timeval t1, t2;
       double elapsedTime;
@@ -119,6 +119,6 @@ extern "C" {
       elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;    // sec to ms
       elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0; // us to ms
 
-      printf("500 000 entries sorted in %.0f ms\n\n", elapsedTime);
+      return elapsedTime;
     }
 }
