@@ -11,8 +11,8 @@ To highlight the supposed benefits of WebAssembly, we'll implements the followin
 
 ### Mono Threaded
 - Ecmascript builtin sort
-- Javascript module, own implementation
-- WebAssembly module, own implementation
+- Javascript module, lomuto implementation
+- WebAssembly module, lomuto implementation
 
 ### Parallelized
 - Web Worker (todo)
@@ -35,8 +35,12 @@ For now, the configure and build scripts are **Windows only**, it's still possib
 but it'll require you to build the WASM module yourself.
 
 ### Pre-requisites
+- A web browser compatible with WebAssembly threads (i.e chrome 70+)
 - [NodeJS](https://nodejs.org/en/) 6+
 - [Emscripten](https://emscripten.org/docs/getting_started/downloads.html)
+- WebAssembly threads enabled:
+   - On Google Chrome, type in `chrome://flags` in the address bar, and enable WebAssembly threads support ([see](https://developers.google.com/web/updates/2018/10/wasm-threads))
+
 
 ### Installing
 Just run `npm i` in a terminal and follow the instructions. 
