@@ -36,10 +36,10 @@ function logResults(iteration) {
   return new Promise((resolve) => {
     setTimeout(() => {
       divIteration.innerText = `Iteration ${iteration}`;
-      divEcma.innerText = `Ecma Sort: ${(results.ecma/iteration).toFixed(2)}`;
-      divCustomJs.innerText = `JS Lomuto Quicksort: ${(results.customJs/iteration).toFixed(2)}`;
-      divMWasm.innerText = `1 Thread WebAssembly Quicksort: ${(results.mWasm/iteration).toFixed(2)}`;
-      divTWasm.innerText = `2 Threads WebAssembly Quicksort: ${(results.tWasm/iteration).toFixed(2)}`;
+      divEcma.innerText = `Ecma Sort: ${(results.ecma/iteration).toFixed(2)} ms`;
+      divCustomJs.innerText = `JS Lomuto Quicksort: ${(results.customJs/iteration).toFixed(2)} ms`;
+      divMWasm.innerText = `1 Thread WebAssembly Quicksort: ${(results.mWasm/iteration).toFixed(2)} ms`;
+      divTWasm.innerText = `2 Threads WebAssembly Quicksort: ${(results.tWasm/iteration).toFixed(2)} ms`;
       resolve();
     }, 400); // give some time for the display
   });
